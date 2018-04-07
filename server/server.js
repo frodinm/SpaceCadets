@@ -45,7 +45,7 @@ var specificControllers = require("./rest/controllers/_specificControllers");
 
 const writable = process.env.writable === "true" || true;
 
-console.log("AIRadio Database");
+console.log(`${dbName} Database`);
 console.log("Initializing ...");
 console.log("Throwing in some middlewares .... ");
 
@@ -105,3 +105,16 @@ server.listen(process.env.PORT || 5000, () => {
   );
 });
 
+websocket.on( "connection", socket =>{
+  console.log("a user connected");
+
+  socket.emit("connection", "hello");
+
+  socket.on("location",location=>{
+    console.log(location)
+  })
+
+  socket.on("disconnect", function() {
+    console.log("user disconnected");
+});
+})
