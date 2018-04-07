@@ -18,8 +18,8 @@ mongoose.model('location',addressModelSchema ,'location' )
 
 const MembersSchema = mongoose.Schema({
     name: {type: String, noedit: true},
-    // username: { type: String, index: { unique: true } }, not necessary for this hack
-    // password: { type: String},
+    username: { type: String, index: { unique: true } },
+    password: { type: String},
     profession: {type: String, required: true},
     birthday: {type: String, noedit: true},
     gender: { type: String, required: false},

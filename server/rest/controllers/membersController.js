@@ -72,28 +72,36 @@ var createRouter = function(modelName, model, writable, viewMode){
         newItem.save();
        });
 
-      router.post('/register', function(req, res,next) {
-        theModel.findOne({name:req.body.name},function (err, user) {
-         if (err) return handleError(err);
-         console.log(!user)
-         if(!user){
-            theModel.create({
-                name:req.body.name,
-                birthday:req.body.birthday,
-                gender:req.body.gender,
-                profession: req.body.profession,
-                location: { longitude: req.body.longitude, latitude: req.body.latitude },
-                profilePicture:req.body.profilePicture,
-                timestamp: new Date().valueOf()
-
-            })
-            res.send({data: req.body})
-            }
-         else{
-             res.send({error: 'User exists!'})
-         }
-       })
-       });
+    router.post('/register', function(req, res,next) {
+    theModel.findOne({name:req.body.name},function (err, user) {
+        if (err) return handleError(err);
+        console.log(!user)
+        if(!user){
+            bcrypt.genSalt(10, function(err, salt) {
+                if (err) return next(err);
+                bcrypt.hash(req.body.password, salt, function(err, hash) {
+                  if (err) return next(err);
+                   // Or however suits your setup
+                   theModel.create({
+                    name:req.body.name,
+                    username:req.body.username,
+                    password:hash,
+                    birthday:req.body.birthday,
+                    gender:req.body.gender,
+                    profession: req.body.profession,
+                    location: { longitude: req.body.location.longitude, latitude: req.body.location.latitude },
+                    profilePicture:req.body.profilePicture,
+                    timestamp: new Date().valueOf()
+                    })
+    
+                })
+                res.send({data: req.body})
+                });
+              }else{
+            res.send({error: 'User exists!'})
+        }
+    })
+    });
 
     router.post('/login',function(req, res, next) {
     

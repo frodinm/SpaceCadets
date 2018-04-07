@@ -114,6 +114,11 @@ websocket.on( "connection", socket =>{
     console.log(location)
   })
 
+  socket.on("photo",photo=>{
+    console.log(photo)
+    socket.emit("photo", photo)
+  })
+
   socket.on("disconnect", function() {
     console.log("user disconnected");
 });
