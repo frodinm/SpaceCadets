@@ -4,17 +4,16 @@ import Camera from "react-camera";
 export default class App extends Component {
   constructor(props) {
     super(props);
-    this.takePicture = this.takePicture.bind(this);
   }
 
-  takePicture() {
+  takePicture = () => {
     this.camera.capture().then(blob => {
       this.img.src = URL.createObjectURL(blob);
       this.img.onload = () => {
         URL.revokeObjectURL(this.src);
       };
     });
-  }
+  };
 
   render() {
     return (
