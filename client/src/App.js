@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import logo from "./logo.svg";
+import Axios from 'axios';
 import "./App.css";
 import { default as Map } from "./components/map";
 
