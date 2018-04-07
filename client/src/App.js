@@ -2,25 +2,26 @@ import React, { Component } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import { default as Map } from "./components/map";
+import Axios from "axios";
 
 const baseURL = "http://localhost:5000";
 
 class App extends Component {
-  constructor(){
+  constructor() {
     super();
 
     Axios.request({
       baseURL,
-      method: 'post',
+      method: "post",
       url: "/member/register",
-      data:{
-        name: 'Fabrizio RM',
-        profession: 'Coder',
-        birthday: '11 January 1997',
-        gender: 'Male',
-        location: { longitude: 100, latitude: 150},
+      data: {
+        name: "Fabrizio RM",
+        profession: "Coder",
+        birthday: "11 January 1997",
+        gender: "Male",
+        location: { longitude: 100, latitude: 150 }
       }
-    })
+    });
   }
   render() {
     return (
