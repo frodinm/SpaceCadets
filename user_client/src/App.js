@@ -4,6 +4,8 @@ import io from "socket.io-client";
 import { default as RegisterButton } from "./components/register";
 import { default as SignInButton } from "./components/SignIn";
 import "antd/dist/antd.css";
+import { Icon } from "antd";
+
 const socket = io("https://6ec8bff1.ngrok.io");
 
 export default class App extends Component {
@@ -36,19 +38,39 @@ export default class App extends Component {
   render() {
     return (
       <div style={style.container}>
-        <SignInButton />
-        <RegisterButton />
+        <div style={{ display: "flex", backgroundColor: "white" }}>
+          <h3 style={{ paddingLeft: "10px", margin: "auto", width: "100%" }}>
+            Space Cadets
+          </h3>
+          <div style={{ margin: "10px" }}>
+            <SignInButton />
+          </div>
+          <div style={{ margin: "10px" }}>
+            <RegisterButton />
+          </div>
+        </div>
 
         <Camera
           style={style.preview}
           ref={cam => {
             this.camera = cam;
           }}
-        >
-          <div style={style.captureContainer} onClick={this.takePicture}>
-            <div style={style.captureButton} />
+        />
+        <div style={style.captureContainer} onClick={this.takePicture}>
+          <div style={style.captureButton}>
+            <Icon
+              style={{
+                fontSize: "30px",
+                margin: "auto",
+                justifyContent: "center",
+                alignItems: "center",
+                display: "flex",
+                height: "100%"
+              }}
+              type="camera-o"
+            />
           </div>
-        </Camera>
+        </div>
         <img style={style.captureImage} src={this.state.photo} />
       </div>
     );
@@ -56,9 +78,12 @@ export default class App extends Component {
 }
 
 const style = {
+  container: {
+    height: "auto"
+  },
   preview: {
     position: "relative",
-    height: "100vh"
+    height: "auto"
   },
   captureContainer: {
     display: "flex",
@@ -69,7 +94,8 @@ const style = {
     width: "100%"
   },
   captureButton: {
-    backgroundColor: "#fff",
+    backgroundColor: "white",
+    boxShadow: "0px 0px 4px #5d5d5d",
     borderRadius: "50%",
     height: 56,
     width: 56,

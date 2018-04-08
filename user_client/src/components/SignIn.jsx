@@ -110,8 +110,8 @@ export default class SignInButton extends React.Component {
       }
 
       console.log("Received values of form: ", values);
-      postMemberLogin(values.username, values.password).then(response => {
-        console.log(response.data.message);
+      postMemberLogin(values.userName, values.password).then(response => {
+        console.log(response);
       });
       form.resetFields();
       this.setState({ visible: false });
