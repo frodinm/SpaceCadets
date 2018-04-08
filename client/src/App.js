@@ -6,16 +6,24 @@ import Axios from "axios";
 import "./App.css";
 import { Map } from "./components";
 import Test from "./components/test";
+import io from "socket.io-client";
 
-const baseURL = "http://localhost:5000";
+const socket = io("http://b03c615f.ngrok.io");
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
       users: null,
-      newCoordinatesDelta: { lat: 20.4, lng: 7.4 }
+      newCoordinatesDelta: { lat: 20.4, lng: 7.4 },
+      notificationList: []
     };
+    socket.on("notification", notification => {
+      console.log(notification);
+      this.setState({
+        notificationList: [...this.state.notificationList, notification]
+      });
+    });
   }
 
   getUsers = async () =>
@@ -98,7 +106,7 @@ class App extends Component {
     return (
       <div className="App">
         <MapNav passMapViewDirection={this.updateMapView}/>
-        <Sidebar />
+        <Sidebar notificationList={this.state.notificationList} />
         <Map
           ref={ gm => this.googleMap = gm }
           isMarkerShown
