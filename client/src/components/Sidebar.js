@@ -85,7 +85,7 @@ class Sidebar extends Component {
                       <i className="far fa-compass"></i> Directions
                     </button> <button 
                       className="btn btn-success">
-                      <i class="fas fa-map-marker"></i> Location
+                      <i className="fas fa-map-marker"></i> Location
                     </button>
                   </td>
                 </tr>

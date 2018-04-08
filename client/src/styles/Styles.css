@@ -7,6 +7,10 @@ td {
   padding: 0.25em;
 }
 
+.noScrollbar {
+  overflow: hidden
+}
+
 .mapNavWrapper {
   left: 0px;
   position: absolute;

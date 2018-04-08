@@ -72,7 +72,7 @@ export const Map = compose(
     defaultZoom={12}
     defaultCenter={{ lat: 20.3554841, lng: 7.5730188 }}
   >
-    <div>
+    <div className="noScollbar">
       {props.isMarkerShown &&
         sampleMarkers.map((marker, key) => (
           <CustomMarker
