@@ -15,7 +15,9 @@ class App extends Component {
     this.state = {
       users: null,
       notificationList: [],
-      clarifaiList: []
+      clarifaiList: [],
+      newCoordinatesDelta: { lat: 20.4, lng: 7.4 },
+      notificationList: []
     };
     socket.on("notification", notification => {
       console.log(notification);
@@ -36,20 +38,111 @@ class App extends Component {
       .then(x => x.json())
       .then(y => this.setState({ users: y }));
 
+  getCenterCoordinates = () => {
+    return this.state.newCoordinatesDelta;
+  };
+
+  updateMapView = direction => {
+    switch (direction) {
+      case "topLeft":
+        this.setState(st => {
+          return {
+            newCoordinatesDelta: {
+              lat: st.newCoordinatesDelta.lat - 0.5,
+              lng: st.newCoordinatesDelta.lng + 0.5
+            }
+          };
+        });
+        break;
+      case "top":
+        this.setState(st => {
+          return {
+            newCoordinatesDelta: {
+              lat: st.newCoordinatesDelta.lat + 0,
+              lng: st.newCoordinatesDelta.lng + 0.5
+            }
+          };
+        });
+        break;
+      case "topRight":
+        this.setState(st => {
+          return {
+            newCoordinatesDelta: {
+              lat: st.newCoordinatesDelta.lat + 0.5,
+              lng: st.newCoordinatesDelta.lng + 0.5
+            }
+          };
+        });
+        break;
+      case "right":
+        this.setState(st => {
+          return {
+            newCoordinatesDelta: {
+              lat: st.newCoordinatesDelta.lat + 0.5,
+              lng: st.newCoordinatesDelta.lng + 0
+            }
+          };
+        });
+        break;
+      case "bottomRight":
+        this.setState(st => {
+          return {
+            newCoordinatesDelta: {
+              lat: st.newCoordinatesDelta.lat + 0.5,
+              lng: st.newCoordinatesDelta.lng - 0.5
+            }
+          };
+        });
+        break;
+      case "bottom":
+        this.setState(st => {
+          return {
+            newCoordinatesDelta: {
+              lat: st.newCoordinatesDelta.lat + 0,
+              lng: st.newCoordinatesDelta.lng - 0.5
+            }
+          };
+        });
+        break;
+      case "bottomLeft":
+        this.setState(st => {
+          return {
+            newCoordinatesDelta: {
+              lat: st.newCoordinatesDelta.lat - 0.5,
+              lng: st.newCoordinatesDelta.lng - 0.5
+            }
+          };
+        });
+        break;
+      case "left":
+        this.setState(st => {
+          return {
+            newCoordinatesDelta: {
+              lat: st.newCoordinatesDelta.lat - 0.5,
+              lng: st.newCoordinatesDelta.lng + 0
+            }
+          };
+        });
+        break;
+      default:
+        break;
+    }
+  };
+
   componentWillMount = async () => {
     this.getUsers();
   };
 
   render() {
-    console.log(this.state);
     return (
       <div className="App">
-        <MapNav />
         <Sidebar
           notificationList={this.state.notificationList}
           clarifaiList={this.state.clarifaiList}
         />
+        <MapNav passMapViewDirection={this.updateMapView} />
         <Map
+          ref={gm => (this.googleMap = gm)}
           isMarkerShown
           googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
           loadingElement={<div style={{ height: `100%` }} />}
@@ -57,6 +150,7 @@ class App extends Component {
           mapElement={<div style={{ height: `100%` }} />}
           users={this.state.users}
           notificationList={this.state.notificationList}
+          mapCenter={this.getCenterCoordinates()}
         />
       </div>
     );

@@ -28,7 +28,7 @@ export const Map = compose(
       options={{ mapTypeControl: false, streetViewControl: false }}
       mapTypeId="satellite"
       defaultZoom={12}
-      defaultCenter={{ lat: 20.3554841, lng: 7.5730188 }}
+      defaultCenter={{ lat: props.mapCenter.lat, lng: props.mapCenter.lng }}
     >
       <div className="noScollbar">
         {props.isMarkerShown && props.users
