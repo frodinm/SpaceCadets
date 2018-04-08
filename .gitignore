@@ -1,0 +1,5 @@
+.DS_Store
+/server/node_modules
+/server/yarn-error.log
+/client/node_modules
+/yarn-error.log

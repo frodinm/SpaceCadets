@@ -1,0 +1,86 @@
+body {
+  overflow: hidden;
+}
+
+table {
+  border: 2px solid #ccc;
+}
+
+td {
+  border: 1px solid #ccc;
+  padding: 0.25em;
+}
+
+.mapNavWrapper {
+  left: 0px;
+  position: absolute;
+  max-width: 300px;
+  z-index: 1;
+}
+
+.mapNavButton {
+  height: 5em;
+  margin: 0.15em;
+  width: 5em;
+  background: rgba(0, 123, 255, 0.66);
+  border: none;
+}
+
+.custom-fa-rotate-45 {
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.collapsedNavbar {
+  background: linear-gradient(to left, #aaa, #eee);
+  color: #666;
+  cursor: pointer;
+  position: absolute;
+  right: 0px;
+  padding: 0.8em 1.8em;
+  height: 100%;
+  z-index: 2;
+}
+
+.expandedNavbar {
+  background: linear-gradient(to left, #aaa, #eee);
+  position: absolute;
+  right: 0px;
+  height: 100%;
+  padding: 0.5em 1em;
+  z-index: 2;
+  overflow-y: scroll;
+}
+
+.hamBurglar {
+  background: transparent;
+  border: none;
+  border-radius: 5px;
+  font-size: 2em;
+  color: #007bff;
+  cursor: pointer;
+  margin-top: -0.35em;
+  position: absolute;
+  right: 0.25em;
+}
+
+.sidebarCloseIcon {
+  background: transparent;
+  border: none;
+  border-radius: 5px;
+  font-size: 2em;
+  color: #007bff;
+  cursor: pointer;
+  margin-top: -0.35em;
+  position: absolute;
+  right: 0.25em;
+}
+
+.sidebarPic {
+  border-radius: 15px;
+  max-width: 200px;
+  margin-bottom: 1em;
+}
