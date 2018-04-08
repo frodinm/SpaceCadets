@@ -1,6 +1,6 @@
 import Axios from "axios";
 
-const baseURL = "https://a7c5899f.ngrok.io";
+const baseURL = "https://e2c18673.ngrok.io";
 
 const generateData = () => {
   let latitude = Math.random() / 5 + 20.3554841;
@@ -25,9 +25,10 @@ export const postMemberRegister = (
   name,
   profession,
   birthday,
-  gender
+  gender,
+  phone
 ) => {
-  new Promise(resolve => {
+  return new Promise(resolve => {
     let data = generateData();
     resolve(data);
   }).then(data => {
@@ -48,7 +49,8 @@ export const postMemberRegister = (
         },
         heartRate: data.heartRate,
         height: data.height,
-        weight: data.weight
+        weight: data.weight,
+        phone: phone
       }
     });
   });

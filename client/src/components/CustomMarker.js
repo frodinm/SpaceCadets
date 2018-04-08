@@ -12,6 +12,15 @@ export default class CustomMarker extends React.Component {
     isOpen: false
   };
 
+  componentWillMount() {
+    console.log("customMarker", this.props);
+    if (this.props.notif) {
+      this.setState({
+        isOpen: true
+      });
+    }
+  }
+
   onMarkerClick = () => {
     this.setState(st => {
       return { isOpen: !st.isOpen };

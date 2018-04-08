@@ -17,7 +17,8 @@ class App extends Component {
       notificationList: [],
       clarifaiList: [],
       newCoordinatesDelta: { lat: 20.4, lng: 7.4 },
-      notificationList: []
+      notificationList: [],
+      notifName: ""
     };
     socket.on("notification", notification => {
       console.log(notification);
@@ -30,6 +31,10 @@ class App extends Component {
       this.setState({
         clarifaiList: [...this.state.clarifaiList, clarifai]
       });
+    });
+
+    socket.on("notifName", notifName => {
+      this.setState({ notifName: notifName });
     });
   }
 
@@ -134,6 +139,7 @@ class App extends Component {
   };
 
   render() {
+    console.log("notif", this.state);
     return (
       <div className="App">
         <Sidebar
@@ -149,8 +155,8 @@ class App extends Component {
           containerElement={<div style={{ height: `100vh` }} />}
           mapElement={<div style={{ height: `100%` }} />}
           users={this.state.users}
-          notificationList={this.state.notificationList}
           mapCenter={this.getCenterCoordinates()}
+          notifName={this.state.notifName}
         />
       </div>
     );

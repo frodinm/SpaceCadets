@@ -14,7 +14,8 @@ import {
   AutoComplete,
   Modal,
   Radio,
-  DatePicker
+  DatePicker,
+  Upload
 } from "antd";
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -50,6 +51,14 @@ const RegisterForm = Form.create()(
     render() {
       const { visible, onCancel, onCreate, form } = this.props;
       const { getFieldDecorator } = form;
+      const prefixSelector = getFieldDecorator("prefix", {
+        initialValue: "1"
+      })(
+        <Select style={{ width: 70 }}>
+          <Option value="86">+1</Option>
+          <Option value="87">+87</Option>
+        </Select>
+      );
       return (
         <Modal
           visible={visible}
@@ -142,6 +151,15 @@ const RegisterForm = Form.create()(
               ]
             })(<DatePicker />)}
           </FormItem>
+          <FormItem {...formItemLayout} label="Phone Number">
+            {getFieldDecorator("phone", {
+              rules: [
+                { required: true, message: "Please input your phone number!" }
+              ]
+            })(
+              <Input addonBefore={prefixSelector} style={{ width: "100%" }} />
+            )}
+          </FormItem>
         </Modal>
       );
     }
@@ -167,13 +185,14 @@ export default class RegisterButton extends React.Component {
       }
 
       console.log("Received values of form: ", values);
-      postMemberRegister(
+      register(
         values.username,
         values.password,
         values.name,
         values.profession,
         values.birthday.d,
-        values.gender
+        values.gender,
+        values.phone
       );
 
       form.resetFields();

@@ -11,30 +11,16 @@ import {
 } from "./utils/api";
 import { Icon, Button } from "antd";
 
-const socket = io("https://a7c5899f.ngrok.io");
+const socket = io("https://e2c18673.ngrok.io");
 
 export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       photo: "",
-      isLoggedIn: false
+      isLoggedIn: false,
+      user: {}
     };
-
-    socket.on("photo", photo => {
-      console.log(photo);
-      this.setState({
-        photo: photo
-      });
-    });
-
-    // socket.on("photo_response", response => {
-    //   console.log(response);
-    // });
-
-    // socket.on("photo_error", err => {
-    //   console.log(err);
-    // });
   }
 
   login = (username, password) => {
@@ -42,7 +28,8 @@ export default class App extends Component {
       console.log(response);
       if (response.data.message) {
         this.setState({
-          isLoggedIn: true
+          isLoggedIn: true,
+          user: response.data.user
         });
       } else {
         console.log(response);
@@ -50,16 +37,26 @@ export default class App extends Component {
     });
   };
 
-  register = (username, password, name, profession, birthday, gender) => {
+  register = (
+    username,
+    password,
+    name,
+    profession,
+    birthday,
+    gender,
+    phone
+  ) => {
     postMemberRegister(
       username,
       password,
       name,
       profession,
       birthday,
-      gender
+      gender,
+      phone
     ).then(response => {
-      if (response.data.message) {
+      console.log(response);
+      if (response.data.data) {
         this.setState({
           isLoggedIn: true
         });
@@ -73,7 +70,8 @@ export default class App extends Component {
     postMemberLogout().then(response => {
       if (response.data.message) {
         this.setState({
-          isLoggedIn: false
+          isLoggedIn: false,
+          user: {}
         });
       }
     });
@@ -84,14 +82,23 @@ export default class App extends Component {
       //convert blob to base64
       let reader = new FileReader();
       reader.readAsDataURL(blob);
-      reader.onloadend = function() {
+      reader.onloadend = () => {
         let base64data = reader.result;
         socket.emit("photo", base64data.split("base64,")[1]);
+        this.setState({
+          photo: base64data
+        });
+
+        let notification = this.state.user;
+        notification.photo = base64data;
+        socket.emit("notification", notification);
+        socket.emit("notifName", this.state.user.username);
       };
     });
   };
 
   render() {
+    console.log("user", this.state.user);
     return (
       <div style={style.container}>
         <div style={{ display: "flex", backgroundColor: "white" }}>
@@ -138,7 +145,7 @@ export default class App extends Component {
                 />
               </div>
             </div>
-            <img style={style.captureImage} src={this.state.photo[0]} />
+            <img style={style.captureImage} src={this.state.photo} />
           </div>
         ) : (
           ""
