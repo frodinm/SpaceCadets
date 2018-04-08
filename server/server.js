@@ -5,11 +5,18 @@ var bodyParser = require("body-parser");
 var cors = require("cors");
 var http = require("http");
 var socketio = require("socket.io");
+var Clarifai = require('clarifai');
 
 var logger = require("morgan");
 var passport = require("passport");
 var LocalStrategy = require("passport-local").Strategy;
 var bcrypt = require("bcrypt");
+
+
+const clarifai = new Clarifai.App({
+  apiKey: 'f192eab32e494c4d892db3d0bc42e534'
+});
+
 
 var app = express();
 app.use(cors());
@@ -45,7 +52,7 @@ var specificControllers = require("./rest/controllers/_specificControllers");
 
 const writable = process.env.writable === "true" || true;
 
-console.log("AIRadio Database");
+console.log(`${dbName} Database`);
 console.log("Initializing ...");
 console.log("Throwing in some middlewares .... ");
 
@@ -105,3 +112,29 @@ server.listen(process.env.PORT || 5000, () => {
   );
 });
 
+websocket.on( "connection", socket =>{
+  console.log("a user connected");
+
+  socket.emit("connection", "hello");
+
+  socket.on("location",location=>{
+    console.log(location)
+  })
+
+  socket.on("photo",photo=>{
+    console.log(photo)
+    clarifai.models.predict(Clarifai.GENERAL_MODEL, {base64: photo}).then(
+      function(response) {
+        console.log(response);
+      },
+      function(err) {
+        console.error(err);
+      }
+    );
+    socket.emit("photo", photo)
+  });
+
+  socket.on("disconnect", function() {
+    console.log("user disconnected");
+});
+})

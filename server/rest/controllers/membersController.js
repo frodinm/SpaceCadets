@@ -8,6 +8,7 @@ var createRouter = function(modelName, model, writable, viewMode){
     var theModelName = modelName;
     var view = viewMode;
 
+   
 
     var hashPasswords = function(pass){
         bcrypt.hash(pass, 10, null, function(err, hash, cb) {
@@ -27,6 +28,26 @@ var createRouter = function(modelName, model, writable, viewMode){
         }
     };
 
+    function insertDocument(doc, targetCollection) {
+
+        while (1) {
+    
+            var cursor = targetCollection.find( {}, { _id: 1 } ).sort( { _id: -1 } ).limit(1).cursor();
+
+            console.log(cursor)
+    
+            var seq = cursor ? cursor.next()._id + 1 : 1;
+    
+            doc._id = seq;
+    
+            targetCollection.create(doc);
+    
+    
+            break;
+        }
+    }
+    
+
     //Generic function used both to create or update document
     var updateAndSave = function(req, res, name, document, view){
     //cycle through body content to add properties
@@ -44,18 +65,16 @@ var createRouter = function(modelName, model, writable, viewMode){
             }
         });
     };
-    /**
-     * @api {get} / Request User information
-     * @apiName GetUser
-     * @apiGroup User
-     *
-     * @apiParam {Number} id Users unique ID.
-     *
-     * @apiSuccess {String} firstname Firstname of the User.
-     * @apiSuccess {String} lastname  Lastname of the User.
-     */
+    
+    router.post('/photo',function(req,res){
+        var newItem = new theModel();
+        newItem.photo.data = fs.readFileSync(req.files.userPhoto.path)
+        newItem.photo.contentType = 'image/png';
+        newItem.save();
+       });
+
     router.post('/register', function(req, res,next) {
-       theModel.findOne({username:req.body.username},function (err, user) {
+    theModel.findOne({name:req.body.name},function (err, user) {
         if (err) return handleError(err);
         console.log(!user)
         if(!user){
@@ -64,26 +83,26 @@ var createRouter = function(modelName, model, writable, viewMode){
                 bcrypt.hash(req.body.password, salt, function(err, hash) {
                   if (err) return next(err);
                    // Or however suits your setup
-                  theModel.create({
+                   theModel.create({
                     name:req.body.name,
                     username:req.body.username,
                     password:hash,
                     birthday:req.body.birthday,
                     gender:req.body.gender,
-                    keyAccess:req.body.keyAccess,
-                    program:req.body.program,
+                    profession: req.body.profession,
+                    location: { longitude: req.body.location.longitude, latitude: req.body.location.latitude },
                     profilePicture:req.body.profilePicture,
                     timestamp: new Date().valueOf()
+                    })
     
                 })
                 res.send({data: req.body})
                 });
-              });
-        }else{
-            res.send({error: 'Username is taken!'})
+              }else{
+            res.send({error: 'User exists!'})
         }
-      })
-      });
+    })
+    });
 
     router.post('/login',function(req, res, next) {
     
