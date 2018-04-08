@@ -11,7 +11,7 @@ import {
 } from "./utils/api";
 import { Icon, Button } from "antd";
 
-const socket = io("https://6ec8bff1.ngrok.io");
+const socket = io("http://localhost:5000/");
 
 export default class App extends Component {
   constructor(props) {
@@ -26,6 +26,14 @@ export default class App extends Component {
       this.setState({
         photo: photo
       });
+    });
+
+    socket.on("photo_response", response => {
+      console.log(response);
+    });
+
+    socket.on("photo_error", err => {
+      console.log(err);
     });
   }
 
@@ -78,7 +86,7 @@ export default class App extends Component {
       reader.readAsDataURL(blob);
       reader.onloadend = function() {
         let base64data = reader.result;
-        socket.emit("photo", base64data);
+        socket.emit("photo", base64data.split("base64,")[1]);
       };
     });
   };

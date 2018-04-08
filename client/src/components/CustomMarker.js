@@ -27,8 +27,18 @@ export default class CustomMarker extends React.Component {
   render() {
     const { latitude, longitude, name, profession, heartRate } = this.props;
 
+    const google = window.google;
+    var marker_icon = {
+      url: "/images/humanflag.png",
+      size: new google.maps.Size(100, 100),
+      origin: new google.maps.Point(0, 0),
+      anchor: new google.maps.Point(17, 34),
+      scaledSize: new google.maps.Size(100, 100)
+    };
+
     return (
       <Marker
+        options={{ icon: marker_icon }}
         position={{ lat: latitude, lng: longitude }}
         onClick={this.onMarkerClick}
       >
