@@ -5,18 +5,16 @@ var bodyParser = require("body-parser");
 var cors = require("cors");
 var http = require("http");
 var socketio = require("socket.io");
-var Clarifai = require('clarifai');
+var Clarifai = require("clarifai");
 
 var logger = require("morgan");
 var passport = require("passport");
 var LocalStrategy = require("passport-local").Strategy;
 var bcrypt = require("bcrypt");
 
-
 const clarifai = new Clarifai.App({
-  apiKey: 'f192eab32e494c4d892db3d0bc42e534'
+  apiKey: "f192eab32e494c4d892db3d0bc42e534"
 });
-
 
 var app = express();
 app.use(cors());
@@ -31,7 +29,6 @@ var websocket = socketio(server);
 
 var mongoose = require("mongoose");
 var dbName = "MissionHack";
-
 
 var response = function(res) {
   console.log(res);
@@ -100,10 +97,21 @@ passport.deserializeUser(Members.deserializeUser());
 
 for (var model in models) {
   console.log("Registering model : " + model);
-  app.use("/json/" + model + "/",genericControllers.createRouter(model, models[model], writable, "json"));
+  app.use(
+    "/json/" + model + "/",
+    genericControllers.createRouter(model, models[model], writable, "json")
+  );
 }
 
-app.use("/member/",specificControllers.memberController("members",models["members"],writable,"json"));
+app.use(
+  "/member/",
+  specificControllers.memberController(
+    "members",
+    models["members"],
+    writable,
+    "json"
+  )
+);
 
 //Lets launch the service!
 server.listen(process.env.PORT || 5000, () => {
@@ -112,26 +120,17 @@ server.listen(process.env.PORT || 5000, () => {
   );
 });
 
-clarifai.models.predict(Clarifai.GENERAL_MODEL, 'https://samples.clarifai.com/metro-north.jpg').then(
-  function(response) {
-    console.log(response);
-  },
-  function(err) {
-    console.error(err);
-  }
-);
-
-websocket.on( "connection", socket =>{
+websocket.on("connection", socket => {
   console.log("a user connected");
 
   socket.emit("connection", "hello");
 
-  socket.on("location",location=>{
-    console.log(location)
-  })
+  socket.on("location", location => {
+    console.log(location);
+  });
 
-  socket.on("photo",photo=>{
-    clarifai.models.predict(Clarifai.GENERAL_MODEL, {base64: photo}).then(
+  socket.on("photo", photo => {
+    clarifai.models.predict(Clarifai.GENERAL_MODEL, { base64: photo }).then(
       function(response) {
         socket.emit("photo_response", response);
       },
@@ -139,10 +138,10 @@ websocket.on( "connection", socket =>{
         socket.emit("photo_error", err);
       }
     );
-    socket.emit("photo", photo)
+    socket.emit("photo", photo);
   });
 
   socket.on("disconnect", function() {
     console.log("user disconnected");
   });
-})
+});

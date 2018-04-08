@@ -13,7 +13,7 @@ import {
 } from "./utils/api";
 import { Icon, Button } from "antd";
 
-const socket = io("http://localhost:5000/");
+const socket = io("https://a7c5899f.ngrok.io");
 
 export default class App extends Component {
   constructor(props) {
@@ -30,20 +30,18 @@ export default class App extends Component {
       });
     });
 
-    socket.on("photo_response", response => {
-      console.log(response);
-    });
+    // socket.on("photo_response", response => {
+    //   console.log(response);
+    // });
 
-    socket.on("photo_error", err => {
-      console.log(err);
-    });
-
-    addResponseMessage("Welcome to this awesome chat!");
-
+    // socket.on("photo_error", err => {
+    //   console.log(err);
+    // });
   }
 
   login = (username, password) => {
     postMemberLogin(username, password).then(response => {
+      console.log(response);
       if (response.data.message) {
         this.setState({
           isLoggedIn: true
@@ -75,7 +73,6 @@ export default class App extends Component {
 
   logout = () => {
     postMemberLogout().then(response => {
-      console.log(response);
       if (response.data.message) {
         this.setState({
           isLoggedIn: false
@@ -160,7 +157,7 @@ export default class App extends Component {
                 />
               </div>
             </div>
-            <img style={style.captureImage} src={this.state.photo} />
+            <img style={style.captureImage} src={this.state.photo[0]} />
           </div>
         ) : (
           ""

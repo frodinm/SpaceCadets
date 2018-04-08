@@ -13,8 +13,8 @@ export default class CustomMarker extends React.Component {
   };
 
   onMarkerClick = () => {
-    this.setState({
-      isOpen: true
+    this.setState(st => {
+      return { isOpen: !st.isOpen };
     });
   };
 
@@ -25,7 +25,15 @@ export default class CustomMarker extends React.Component {
   };
 
   render() {
-    const { latitude, longitude, name, profession, heartRate } = this.props;
+    const {
+      latitude,
+      longitude,
+      name,
+      profession,
+      heartRate,
+      weight,
+      height
+    } = this.props;
 
     const google = window.google;
     var marker_icon = {
@@ -48,6 +56,8 @@ export default class CustomMarker extends React.Component {
               <div>Name: {name} </div>
               <div>Profession: {profession}</div>
               <div>Heart Rate: {heartRate}</div>
+              <div>Height: {height}</div>
+              <div>Weight: {weight}</div>
             </div>
           </InfoWindow>
         )}

@@ -1,6 +1,23 @@
 import Axios from "axios";
 
-const baseURL = "http://localhost:5000/";
+const baseURL = "https://a7c5899f.ngrok.io";
+
+const generateData = () => {
+  let latitude = Math.random() / 5 + 20.3554841;
+  let longitude = Math.random() / 5 + 7.5730188;
+  let heartRate = Math.random() * 100 + 60;
+  let height = Math.random() * 5 + 180;
+  let weight = Math.random() * 10 + 175;
+
+  let data = {
+    latitude: latitude,
+    longitude: longitude,
+    heartRate: heartRate,
+    height: height,
+    weight: weight
+  };
+  return data;
+};
 
 const baseChatURL = "https://api.dialogflow.com/v1/";
 
@@ -12,19 +29,30 @@ export const postMemberRegister = (
   birthday,
   gender
 ) => {
-  return Axios.request({
-    baseURL,
-    method: "post",
-    url: "/member/register",
-    data: {
-      username: username,
-      name: name,
-      profession: profession,
-      birthday: birthday,
-      gender: gender,
-      password: password,
-      location: { longitude: 100, latitude: 150 }
-    }
+  new Promise(resolve => {
+    let data = generateData();
+    resolve(data);
+  }).then(data => {
+    return Axios.request({
+      baseURL,
+      method: "post",
+      url: "/member/register",
+      data: {
+        username: username,
+        name: name,
+        profession: profession,
+        birthday: birthday,
+        gender: gender,
+        password: password,
+        location: {
+          longitude: data.longitude,
+          latitude: data.latitude
+        },
+        heartRate: data.heartRate,
+        height: data.height,
+        weight: data.weight
+      }
+    });
   });
 };
 

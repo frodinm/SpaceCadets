@@ -28,5 +28,6 @@
     "passport-local-mongoose": "^5.0.0",
     "request": "^2.85.0",
     "socket.io": "^2.1.0"
-  }
+  },
+  "proxy": "http://localhost:5000"
 }
