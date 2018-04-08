@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import logo from "./logo.svg";
-import Axios from 'axios';
+import Axios from "axios";
 import "./App.css";
 import { default as Map } from "./components/map";
-import Axios from "axios";
 
 const baseURL = "http://localhost:5000";
 
