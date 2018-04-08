@@ -149,7 +149,6 @@ class App extends Component {
           containerElement={<div style={{ height: `100vh` }} />}
           mapElement={<div style={{ height: `100%` }} />}
           users={this.state.users}
-          notificationList={this.state.notificationList}
           mapCenter={this.getCenterCoordinates()}
         />
       </div>

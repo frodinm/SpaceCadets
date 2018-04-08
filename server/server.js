@@ -131,14 +131,21 @@ websocket.on("connection", socket => {
 
   socket.on("photo", photo => {
     clarifai.models.predict(Clarifai.GENERAL_MODEL, { base64: photo }).then(
-      function(response) {
-        socket.emit("photo_response", response);
+      response => {
+        console.log("clarifai");
+        setTimeout(() => {
+          websocket.sockets.emit("clarifai", response.rawData.outputs[0].data);
+        }, 1000);
       },
-      function(err) {
+      err => {
         socket.emit("photo_error", err);
       }
     );
-    socket.emit("photo", photo);
+  });
+
+  socket.on("notification", notification => {
+    console.log("aksdkjahsd");
+    websocket.sockets.emit("notification", notification);
   });
 
   socket.on("disconnect", function() {

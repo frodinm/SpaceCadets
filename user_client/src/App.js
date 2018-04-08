@@ -20,15 +20,17 @@ export default class App extends Component {
     super(props);
     this.state = {
       photo: "",
-      isLoggedIn: false
+      isLoggedIn: false,
+      user: {}
     };
     
-    socket.on("photo", photo => {
-      console.log(photo);
-      this.setState({
-        photo: photo
-      });
-    });
+
+    // socket.on("photo", photo => {
+    //   console.log(photo);
+    //   this.setState({
+    //     photo: photo
+    //   });
+    // });
 
     // socket.on("photo_response", response => {
     //   console.log(response);
@@ -44,7 +46,8 @@ export default class App extends Component {
       console.log(response);
       if (response.data.message) {
         this.setState({
-          isLoggedIn: true
+          isLoggedIn: true,
+          user: response.data.user
         });
       } else {
         console.log(response);
@@ -63,7 +66,8 @@ export default class App extends Component {
     ).then(response => {
       if (response.data.message) {
         this.setState({
-          isLoggedIn: true
+          isLoggedIn: true,
+          user: response.data.user
         });
       } else {
         alert(response.data.error);
@@ -75,7 +79,8 @@ export default class App extends Component {
     postMemberLogout().then(response => {
       if (response.data.message) {
         this.setState({
-          isLoggedIn: false
+          isLoggedIn: false,
+          user: {}
         });
       }
     });
@@ -86,9 +91,15 @@ export default class App extends Component {
       //convert blob to base64
       let reader = new FileReader();
       reader.readAsDataURL(blob);
-      reader.onloadend = function() {
+      reader.onloadend = () => {
         let base64data = reader.result;
         socket.emit("photo", base64data.split("base64,")[1]);
+        this.setState({
+          photo: base64data
+        });
+        let notification = this.state.user;
+        notification.photo = base64data;
+        socket.emit("notification", notification);
       };
     });
   };
@@ -157,7 +168,7 @@ export default class App extends Component {
                 />
               </div>
             </div>
-            <img style={style.captureImage} src={this.state.photo[0]} />
+            <img style={style.captureImage} src={this.state.photo} />
           </div>
         ) : (
           ""
