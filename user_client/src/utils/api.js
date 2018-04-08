@@ -1,6 +1,6 @@
 import Axios from "axios";
 
-const baseURL = "https://a7c5899f.ngrok.io";
+const baseURL = "https://b3ece311.ngrok.io";
 
 const generateData = () => {
   let latitude = Math.random() / 5 + 20.3554841;

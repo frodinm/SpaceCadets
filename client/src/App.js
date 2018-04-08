@@ -7,7 +7,7 @@ import "./App.css";
 import { Map } from "./components";
 import Test from "./components/test";
 import io from "socket.io-client";
-const socket = io("https://e2c18673.ngrok.io");
+const socket = io("https://b3ece311.ngrok.io");
 
 class App extends Component {
   constructor() {
@@ -34,7 +34,7 @@ class App extends Component {
   }
 
   getUsers = async () =>
-    await fetch("https://e2c18673.ngrok.io/member/users")
+    await fetch("https://b3ece311.ngrok.io/member/users")
       .then(x => x.json())
       .then(y => this.setState({ users: y }));
 
@@ -149,7 +149,6 @@ class App extends Component {
           containerElement={<div style={{ height: `100vh` }} />}
           mapElement={<div style={{ height: `100%` }} />}
           users={this.state.users}
-          notificationList={this.state.notificationList}
           mapCenter={this.getCenterCoordinates()}
         />
       </div>
