@@ -1,6 +1,6 @@
 import Axios from "axios";
 
-const baseURL = "https://6ec8bff1.ngrok.io";
+const baseURL = "http://localhost:5000/";
 
 export const postMemberRegister = (
   username,
@@ -35,5 +35,13 @@ export const postMemberLogin = (username, password) => {
       username: username,
       password: password
     }
+  });
+};
+
+export const postMemberLogout = () => {
+  return Axios.request({
+    baseURL,
+    method: "post",
+    url: "/member/logout"
   });
 };

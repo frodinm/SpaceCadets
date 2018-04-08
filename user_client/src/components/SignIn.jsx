@@ -104,15 +104,14 @@ export default class SignInButton extends React.Component {
   };
   handleCreate = () => {
     const form = this.formRef.props.form;
+    const { login } = this.props;
     form.validateFields((err, values) => {
       if (err) {
         return;
       }
 
       console.log("Received values of form: ", values);
-      postMemberLogin(values.userName, values.password).then(response => {
-        console.log(response);
-      });
+      login(values.userName, values.password);
       form.resetFields();
       this.setState({ visible: false });
     });

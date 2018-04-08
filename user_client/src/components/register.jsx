@@ -160,6 +160,7 @@ export default class RegisterButton extends React.Component {
   };
   handleCreate = () => {
     const form = this.formRef.props.form;
+    const { register } = this.props;
     form.validateFields((err, values) => {
       if (err) {
         return;
@@ -173,7 +174,7 @@ export default class RegisterButton extends React.Component {
         values.profession,
         values.birthday.d,
         values.gender
-      ).then(response => alert(response));
+      );
 
       form.resetFields();
       this.setState({ visible: false });
