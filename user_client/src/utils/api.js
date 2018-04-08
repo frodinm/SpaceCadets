@@ -37,3 +37,11 @@ export const postMemberLogin = (username, password) => {
     }
   });
 };
+
+export const postMemberLogout = () => {
+  return Axios.request({
+    baseURL,
+    method: "post",
+    url: "/member/logout"
+  });
+};
