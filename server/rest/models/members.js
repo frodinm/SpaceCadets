@@ -2,13 +2,6 @@ const mongoose = require('mongoose');
 const Types = require('mongoose').SchemaTypes;
 const passportLocalMongoose = require('passport-local-mongoose');
 
-var CounterSchema = new mongoose.Schema({
-    _id: {type: String, required: true},
-    seq: { type: Number, default: 0 }
-});
-var counter = mongoose.model('counter', CounterSchema);
-
-
 
 var addressModelSchema = new mongoose.Schema({
     latitude: String,
@@ -25,7 +18,7 @@ const MembersSchema = mongoose.Schema({
     gender: { type: String, required: false},
     location: { latitude: String, longitude: String},
     timestamp: {type: String, required:true},
-    photo: { data: Buffer, contentType: String }
+    photo: { type: String }
 },{
     strict: false,
     strictQuery: false // Turn on strict mode for query filters
