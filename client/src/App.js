@@ -11,18 +11,22 @@ const baseURL = "http://localhost:5000";
 class App extends Component {
   constructor() {
     super();
+    this.state = {
+      mapLatCenterPos: 0,
+      mapLngCenterPos: 0
+    }
   }
   render() {
     return (
       <div className="App">
-        <div><MapNav /></div>
-        <div><Sidebar /></div>
+        <MapNav/>
+        <Sidebar/>
         <Map
           isMarkerShown
           googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
           loadingElement={<div style={{ height: `100%` }} />}
           containerElement={<div style={{ height: `100vh` }} />}
-          mapElement={<div style={{ height: `100%`, zIndex: "-1" }} />}
+          mapElement={<div style={{ height: `100%` }} />}
         />
       </div>
     );

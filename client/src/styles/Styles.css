@@ -38,6 +38,7 @@ td {
   right: 0px;
   padding: 0.8em 1.8em;
   height: 100%;
+  z-index: 2;
 }
 
 .expandedNavbar {
