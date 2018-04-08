@@ -22,7 +22,8 @@ const MembersSchema = mongoose.Schema(
     photo: { type: String },
     heartRate: { type: String },
     height: { type: String },
-    weight: { type: String }
+    weight: { type: String },
+    phone: { type: String }
   },
   {
     strict: false,

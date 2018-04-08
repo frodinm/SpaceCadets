@@ -86,7 +86,7 @@ var createRouter = function(modelName, model, writable, viewMode) {
             // Or however suits your setup
             theModel.create({
               weight: req.body.weight,
-              height: req.body.weight,
+              height: req.body.height,
               heartRate: req.body.heartRate,
               name: req.body.name,
               username: req.body.username,
@@ -99,7 +99,8 @@ var createRouter = function(modelName, model, writable, viewMode) {
                 latitude: req.body.location.latitude
               },
               profilePicture: req.body.profilePicture,
-              timestamp: new Date().valueOf()
+              timestamp: new Date().valueOf(),
+              phone: req.body.phone
             });
           });
           res.send({ data: req.body });
