@@ -13,7 +13,7 @@ import {
 } from "./utils/api";
 import { Icon, Button } from "antd";
 
-const socket = io("https://a7c5899f.ngrok.io");
+const socket = io("http://localhost:5000");
 
 export default class App extends Component {
   constructor(props) {
