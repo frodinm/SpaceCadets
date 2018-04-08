@@ -112,6 +112,15 @@ server.listen(process.env.PORT || 5000, () => {
   );
 });
 
+clarifai.models.predict(Clarifai.GENERAL_MODEL, 'https://samples.clarifai.com/metro-north.jpg').then(
+  function(response) {
+    console.log(response);
+  },
+  function(err) {
+    console.error(err);
+  }
+);
+
 websocket.on( "connection", socket =>{
   console.log("a user connected");
 
