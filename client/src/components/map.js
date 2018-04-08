@@ -51,6 +51,24 @@ export const Map = compose(
   withGoogleMap
 )(props => {
   console.log(props);
+
+  let markerList = [];
+  if (props.users) {
+    props.users.forEach((user, key) => {
+      markerList.push(
+        <CustomMarker
+          key={key}
+          latitude={parseFloat(user.location.latitude)}
+          longitude={parseFloat(user.location.longitude)}
+          name={user.name}
+          profession={user.profession}
+        />
+      );
+    });
+  }
+
+  console.log(markerList);
+
   return (
     <GoogleMap
       options={{ mapTypeControl: false, streetViewControl: false }}
@@ -58,7 +76,9 @@ export const Map = compose(
       defaultZoom={12}
       defaultCenter={{ lat: 20.3554841, lng: 7.5730188 }}
     >
-      <div className="noScollbar">
+      {markerList}
+      {/* <div className="noScollbar">
+        {markerList}
         {props.isMarkerShown && props.users
           ? props.users.map((marker, key) => (
               <CustomMarker
@@ -71,7 +91,7 @@ export const Map = compose(
               />
             ))
           : "kjashdkjasd"}
-      </div>
+      </div> */}
     </GoogleMap>
   );
 });
