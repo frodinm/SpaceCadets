@@ -2,6 +2,15 @@ import Axios from "axios";
 
 const baseURL = "http://localhost:5000/";
 
+const generateRandomCoords = () => {
+  let longitude = Math.random() + 20;
+  let latitude = Math.random() + 7;
+  let coord = {
+    longitude: longitude,
+    latitude: latitude
+  };
+};
+
 export const postMemberRegister = (
   username,
   password,
@@ -10,6 +19,7 @@ export const postMemberRegister = (
   birthday,
   gender
 ) => {
+  let randomLocation = generateRandomCoords();
   return Axios.request({
     baseURL,
     method: "post",
@@ -21,7 +31,7 @@ export const postMemberRegister = (
       birthday: birthday,
       gender: gender,
       password: password,
-      location: { longitude: 100, latitude: 150 }
+      location: randomLocation
     }
   });
 };

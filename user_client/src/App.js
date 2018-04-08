@@ -28,13 +28,13 @@ export default class App extends Component {
       });
     });
 
-    socket.on("photo_response", response => {
-      console.log(response);
-    });
+    // socket.on("photo_response", response => {
+    //   console.log(response);
+    // });
 
-    socket.on("photo_error", err => {
-      console.log(err);
-    });
+    // socket.on("photo_error", err => {
+    //   console.log(err);
+    // });
   }
 
   login = (username, password) => {
