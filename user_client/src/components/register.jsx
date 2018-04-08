@@ -1,5 +1,5 @@
 import React from "react";
-
+import { postMemberRegister } from "../utils/api";
 import {
   Form,
   Input,
@@ -13,11 +13,13 @@ import {
   Button,
   AutoComplete,
   Modal,
-  Radio
+  Radio,
+  DatePicker
 } from "antd";
 const FormItem = Form.Item;
 const Option = Select.Option;
 const AutoCompleteOption = AutoComplete.Option;
+const RadioGroup = Radio.Group;
 
 const formItemLayout = {
   labelCol: {
@@ -60,10 +62,6 @@ const RegisterForm = Form.create()(
             {getFieldDecorator("username", {
               rules: [
                 {
-                  type: "username",
-                  message: "The input is not valid Username!"
-                },
-                {
                   required: true,
                   message: "Please input your username!"
                 }
@@ -96,17 +94,7 @@ const RegisterForm = Form.create()(
               ]
             })(<Input type="password" onBlur={this.handleConfirmBlur} />)}
           </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label={
-              <span>
-                Name&nbsp;
-                <Tooltip title="What is your name?">
-                  <Icon type="question-circle-o" />
-                </Tooltip>
-              </span>
-            }
-          >
+          <FormItem {...formItemLayout} label="Name">
             {getFieldDecorator("name", {
               rules: [
                 {
@@ -117,11 +105,42 @@ const RegisterForm = Form.create()(
               ]
             })(<Input />)}
           </FormItem>
-
-          <FormItem {...tailFormItemLayout}>
-            <Button type="primary" htmlType="submit">
-              Register
-            </Button>
+          <FormItem {...formItemLayout} label="Gender">
+            {getFieldDecorator("gender", {
+              rules: [
+                {
+                  required: true,
+                  message: "Please input your gender!",
+                  whitespace: true
+                }
+              ]
+            })(
+              <RadioGroup>
+                <Radio value="male">Male</Radio>
+                <Radio value="female">Female</Radio>
+              </RadioGroup>
+            )}
+          </FormItem>
+          <FormItem {...formItemLayout} label="Profession">
+            {getFieldDecorator("profession", {
+              rules: [
+                {
+                  required: true,
+                  message: "Please input your profession!",
+                  whitespace: true
+                }
+              ]
+            })(<Input />)}
+          </FormItem>
+          <FormItem {...formItemLayout} label="Birthday">
+            {getFieldDecorator("birthday", {
+              rules: [
+                {
+                  required: true,
+                  message: "Please input your birthday!"
+                }
+              ]
+            })(<DatePicker />)}
           </FormItem>
         </Modal>
       );
@@ -147,6 +166,15 @@ export default class RegisterButton extends React.Component {
       }
 
       console.log("Received values of form: ", values);
+      postMemberRegister(
+        values.username,
+        values.password,
+        values.name,
+        values.profession,
+        values.birthday.d,
+        values.gender
+      ).then(response => console.log(response));
+
       form.resetFields();
       this.setState({ visible: false });
     });
