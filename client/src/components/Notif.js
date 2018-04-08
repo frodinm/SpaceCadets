@@ -2,9 +2,9 @@ import React from "react";
 
 export default class Notif extends React.Component {
   render() {
-    const { notif } = this.props;
+    const { notif, clarifai } = this.props;
 
-    console.log(notif);
+    console.log("props", this.props);
     return (
       <div className="list-group">
         <div className="list-group-item list-group-item-primary list-group-item-heading">
@@ -29,11 +29,15 @@ export default class Notif extends React.Component {
             <tbody>
               <tr>
                 <td className="table-active">Phone</td>
-                <td>(514) 123-4567</td>
+                <td>{notif.phone}</td>
               </tr>
               <tr>
                 <td className="table-active">Age</td>
-                <td>1</td>
+                <td>{notif.timestamp}</td>
+              </tr>
+              <tr>
+                <td className="table-active">Gender</td>
+                <td>{notif.gender}</td>
               </tr>
               <tr>
                 <td className="table-active">Height</td>
@@ -50,6 +54,20 @@ export default class Notif extends React.Component {
               <tr>
                 <td className="table-active">Vocation</td>
                 <td>{notif.profession}</td>
+              </tr>
+              <tr>
+                <td className="table-active">Clarifai</td>
+                {clarifai ? (
+                  <td>
+                    <div>{clarifai.concepts[0].name}</div>
+                    <div>{clarifai.concepts[1].name}</div>
+                    <div>{clarifai.concepts[2].name}</div>
+                    <div>{clarifai.concepts[3].name}</div>
+                    <div>{clarifai.concepts[4].name}</div>
+                  </td>
+                ) : (
+                  ""
+                )}
               </tr>
               <tr>
                 <td colSpan="2">

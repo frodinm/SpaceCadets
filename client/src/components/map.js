@@ -23,8 +23,6 @@ export const Map = compose(
   withScriptjs,
   withGoogleMap
 )(props => {
-  console.log(props);
-
   return (
     <GoogleMap
       options={{ mapTypeControl: false, streetViewControl: false }}

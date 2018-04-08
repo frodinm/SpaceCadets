@@ -7,15 +7,15 @@ import "./App.css";
 import { Map } from "./components";
 import Test from "./components/test";
 import io from "socket.io-client";
-
-const socket = io("http://b03c615f.ngrok.io");
+const socket = io("https://e2c18673.ngrok.io");
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
       users: null,
-      notificationList: []
+      notificationList: [],
+      clarifaiList: []
     };
     socket.on("notification", notification => {
       console.log(notification);
@@ -23,10 +23,16 @@ class App extends Component {
         notificationList: [...this.state.notificationList, notification]
       });
     });
+
+    socket.on("clarifai", clarifai => {
+      this.setState({
+        clarifaiList: [...this.state.clarifaiList, clarifai]
+      });
+    });
   }
 
   getUsers = async () =>
-    await fetch("https://a7c5899f.ngrok.io/member/users")
+    await fetch("https://e2c18673.ngrok.io/member/users")
       .then(x => x.json())
       .then(y => this.setState({ users: y }));
 
@@ -39,7 +45,10 @@ class App extends Component {
     return (
       <div className="App">
         <MapNav />
-        <Sidebar notificationList={this.state.notificationList} />
+        <Sidebar
+          notificationList={this.state.notificationList}
+          clarifaiList={this.state.clarifaiList}
+        />
         <Map
           isMarkerShown
           googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
@@ -47,6 +56,7 @@ class App extends Component {
           containerElement={<div style={{ height: `100vh` }} />}
           mapElement={<div style={{ height: `100%` }} />}
           users={this.state.users}
+          notificationList={this.state.notificationList}
         />
       </div>
     );

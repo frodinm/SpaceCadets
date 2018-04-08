@@ -28,10 +28,12 @@ class Sidebar extends Component {
   };
 
   renderExpanded = () => {
-    const { notificationList } = this.props;
+    const { notificationList, clarifaiList } = this.props;
     return (
       <div className="expandedNavbar">
-        {notificationList.map(notif => <Notif notif={notif} />)}
+        {notificationList.map((notif, key) => (
+          <Notif key={key} notif={notif} clarifai={clarifaiList[key]} />
+        ))}
       </div>
     );
   };
