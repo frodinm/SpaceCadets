@@ -1,13 +1,13 @@
 body {
-  overflow: hidden
+  overflow: hidden;
 }
 
 table {
-  border: 2px solid #CCC;
+  border: 2px solid #ccc;
 }
 
 td {
-  border: 1px solid #CCC;
+  border: 1px solid #ccc;
   padding: 0.25em;
 }
 
@@ -35,7 +35,7 @@ td {
 }
 
 .collapsedNavbar {
-  background: linear-gradient(to left, #AAA, #EEE);
+  background: linear-gradient(to left, #aaa, #eee);
   color: #666;
   cursor: pointer;
   position: absolute;
@@ -46,12 +46,13 @@ td {
 }
 
 .expandedNavbar {
-  background: linear-gradient(to left, #AAA, #EEE);
+  background: linear-gradient(to left, #aaa, #eee);
   position: absolute;
   right: 0px;
   height: 100%;
   padding: 0.5em 1em;
   z-index: 2;
+  overflow-y: scroll;
 }
 
 .hamBurglar {
