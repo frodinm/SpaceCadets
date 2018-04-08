@@ -3,11 +3,13 @@ import Camera from "react-camera";
 import io from "socket.io-client";
 import { default as RegisterButton } from "./components/register";
 import { default as SignInButton } from "./components/SignIn";
+import { Widget,addResponseMessage, addLinkSnippet, addUserMessage } from 'react-chat-widget';
 import "antd/dist/antd.css";
 import {
   postMemberRegister,
   postMemberLogin,
-  postMemberLogout
+  postMemberLogout,
+  getDialogFlow
 } from "./utils/api";
 import { Icon, Button } from "antd";
 
@@ -20,7 +22,7 @@ export default class App extends Component {
       photo: "",
       isLoggedIn: false
     };
-
+    
     socket.on("photo", photo => {
       console.log(photo);
       this.setState({
@@ -35,6 +37,9 @@ export default class App extends Component {
     socket.on("photo_error", err => {
       console.log(err);
     });
+
+    addResponseMessage("Welcome to this awesome chat!");
+
   }
 
   login = (username, password) => {
@@ -91,6 +96,16 @@ export default class App extends Component {
     });
   };
 
+  handleNewUserMessage = (newMessage) => {
+    console.log(`New message incomig! ${newMessage}`);
+    getDialogFlow(newMessage).then((e)=>{
+      addResponseMessage(e.data.result.fulfillment.speech);
+
+    }).catch((err)=>{
+      console.log(err)
+    })
+  }
+
   render() {
     return (
       <div style={style.container}>
@@ -123,7 +138,7 @@ export default class App extends Component {
                 this.camera = cam;
               }}
             />
-            <div style={style.captureContainer} onClick={this.takePicture}>
+            <div style={style.captureContainer}>
               <div style={style.captureButton}>
                 <Icon
                   style={{
@@ -132,9 +147,16 @@ export default class App extends Component {
                     justifyContent: "center",
                     alignItems: "center",
                     display: "flex",
-                    height: "100%"
+                    height: "100%",
+                    cursor: 'pointer'
                   }}
                   type="camera-o"
+                  onClick={this.takePicture}
+                />
+                <Widget
+                title="First Aid Cadet"
+                subtitle = "Save a life today" 
+                handleNewUserMessage={this.handleNewUserMessage}
                 />
               </div>
             </div>

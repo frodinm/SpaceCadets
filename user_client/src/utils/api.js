@@ -2,6 +2,8 @@ import Axios from "axios";
 
 const baseURL = "http://localhost:5000/";
 
+const baseChatURL = "https://api.dialogflow.com/v1/";
+
 export const postMemberRegister = (
   username,
   password,
@@ -45,3 +47,19 @@ export const postMemberLogout = () => {
     url: "/member/logout"
   });
 };
+
+export const getDialogFlow = (query) =>{
+  return Axios.request({
+    baseURL:baseChatURL,
+    method: 'post',
+    headers: {
+      Authorization: `Bearer 4293dda73a4a4d4a94111bd65b37b441`
+    },
+    url: '/query?v=20150910',
+    data:{
+      lang: "en",
+      sessionId: "12345",
+      query 
+    }
+  })
+}
