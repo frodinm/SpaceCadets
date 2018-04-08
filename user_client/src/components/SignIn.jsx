@@ -1,4 +1,5 @@
 import React from "react";
+import { postMemberLogin } from "../utils/api";
 
 import {
   Form,
@@ -51,8 +52,8 @@ const SignInForm = Form.create()(
       return (
         <Modal
           visible={visible}
-          title="Register"
-          okText="Create"
+          title="Sign in"
+          okText="Sign in"
           onCancel={onCancel}
           onOk={onCreate}
         >
@@ -85,12 +86,6 @@ const SignInForm = Form.create()(
               />
             )}
           </FormItem>
-
-          <FormItem {...tailFormItemLayout}>
-            <Button type="primary" htmlType="submit">
-              Sign in
-            </Button>
-          </FormItem>
         </Modal>
       );
     }
@@ -115,6 +110,9 @@ export default class SignInButton extends React.Component {
       }
 
       console.log("Received values of form: ", values);
+      postMemberLogin(values.userName, values.password).then(response => {
+        console.log(response);
+      });
       form.resetFields();
       this.setState({ visible: false });
     });
