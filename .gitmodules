@@ -1,0 +1,3 @@
+[submodule "react-chat-widget"]
+	path = react-chat-widget
+	url = git@github.com:frodinm/react-chat-widget.git
