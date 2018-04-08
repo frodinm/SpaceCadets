@@ -7,7 +7,7 @@ import "./App.css";
 import { Map } from "./components";
 import Test from "./components/test";
 import io from "socket.io-client";
-const socket = io("https://e2c18673.ngrok.io");
+const socket = io("http://localhost:5000");
 
 class App extends Component {
   constructor() {
@@ -34,7 +34,7 @@ class App extends Component {
   }
 
   getUsers = async () =>
-    await fetch("https://e2c18673.ngrok.io/member/users")
+    await fetch("http://localhost:5000/member/users")
       .then(x => x.json())
       .then(y => this.setState({ users: y }));
 
