@@ -106,19 +106,18 @@ var createRouter = function(modelName, model, writable, viewMode){
 
     router.post('/login',function(req, res, next) {
     
-    passport.authenticate('local', function(err, user, info) {
-            if (err) {
-                return next(err); // will generate a 500 error
-            }
-            // Generate a JSON response reflecting authentication status
-            if (! user) {
-                return res.send({ success : false, message : 'authentication failed',user});
-            }else
-                return res.send({ success : true, message : 'authentication succeeded', user });
-          
-        })(req, res, next);
-    });
-
+        passport.authenticate('local', function(err, user, info) {
+                if (err) {
+                    return next(err); // will generate a 500 error
+                }
+                // Generate a JSON response reflecting authentication status
+                if (! user) {
+                    return res.send({ success : false, error : info,user});
+                }else
+                    return res.send({ success : true, message : 'authentication succeeded', user });
+              
+            })(req, res, next);
+        });
     router.post('/logout', function(req, res){
         res.send({message: 'Logout success'})
         req.logout();
