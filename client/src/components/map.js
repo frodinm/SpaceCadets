@@ -68,6 +68,7 @@ export const Map = compose(
   withGoogleMap
 )(props => (
   <GoogleMap
+    options={{mapTypeControl: false, streetViewControl: false}}
     mapTypeId="satellite"
     defaultZoom={12}
     defaultCenter={{ lat: 20.3554841, lng: 7.5730188 }}
