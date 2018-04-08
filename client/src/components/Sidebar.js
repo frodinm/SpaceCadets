@@ -4,7 +4,7 @@ class Sidebar extends Component {
   constructor() {
     super();
     this.state = { 
-      collapsed: false }
+      collapsed: true }
   }
 
   toggleCollapse = event => {

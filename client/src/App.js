@@ -5,6 +5,7 @@ import logo from "./logo.svg";
 import Axios from "axios";
 import "./App.css";
 import {Map} from "./components";
+import Test from "./components/test";
 
 const baseURL = "http://localhost:5000";
 
@@ -12,11 +13,20 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      mapLatCenterPos: 0,
-      mapLngCenterPos: 0
+      users: null,
     }
   }
+
+  getUsers = async () => await fetch("https://a7c5899f.ngrok.io/member/users")
+  .then(x => x.json())
+  .then(y => this.setState(st => { return { users: y }}));
+
+  componentWillMount = async () => {
+    this.getUsers();
+  }
+
   render() {
+    console.log(this.state.users);
     return (
       <div className="App">
         <MapNav/>
@@ -27,6 +37,7 @@ class App extends Component {
           loadingElement={<div style={{ height: `100%` }} />}
           containerElement={<div style={{ height: `100vh` }} />}
           mapElement={<div style={{ height: `100%` }} />}
+          users={this.state.users}
         />
       </div>
     );

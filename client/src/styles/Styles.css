@@ -1,3 +1,7 @@
+body {
+  overflow: hidden
+}
+
 table {
   border: 2px solid #CCC;
 }
@@ -5,10 +9,6 @@ table {
 td {
   border: 1px solid #CCC;
   padding: 0.25em;
-}
-
-.noScrollbar {
-  overflow: hidden
 }
 
 .mapNavWrapper {

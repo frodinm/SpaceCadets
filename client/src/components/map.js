@@ -9,23 +9,6 @@ import {
 import { default as CustomMarker } from "../components/CustomMarker";
 const { compose, withProps, withStateHandlers } = require("recompose");
 
-const sampleMarkers = [
-  {
-    name: "Brennan Bennett",
-    profession: "Mechanical engineer",
-    latitude: 20.3554841,
-    longitude: 7.5730188,
-    heartRate: 110
-  },
-  {
-    name: "Ammaarah Wilks",
-    profession: "Researcher",
-    latitude: 20.3754841,
-    longitude: 7.630188,
-    heartRate: 70
-  }
-];
-
 // const Map = withScriptjs(
 //   withGoogleMap(props => (
 //     <GoogleMap
@@ -75,7 +58,7 @@ export const Map = compose(
   >
     <div className="noScollbar">
       {props.isMarkerShown &&
-        sampleMarkers.map((marker, key) => (
+        props.users.map((marker, key) => (
           <CustomMarker
             key={key}
             latitude={marker.latitude}
