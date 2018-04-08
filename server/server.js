@@ -122,7 +122,6 @@ websocket.on( "connection", socket =>{
   })
 
   socket.on("photo",photo=>{
-    console.log(photo)
     clarifai.models.predict(Clarifai.GENERAL_MODEL, {base64: photo}).then(
       function(response) {
         socket.emit("photo_response", response);

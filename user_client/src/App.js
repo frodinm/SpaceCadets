@@ -6,7 +6,7 @@ import { default as SignInButton } from "./components/SignIn";
 import "antd/dist/antd.css";
 import { Icon } from "antd";
 
-const socket = io("https://6ec8bff1.ngrok.io");
+const socket = io("http://localhost:5000/");
 
 export default class App extends Component {
   constructor(props) {
@@ -59,7 +59,6 @@ export default class App extends Component {
         </div>
 
         <Camera
-          style={style.preview}
           ref={cam => {
             this.camera = cam;
           }}
