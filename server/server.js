@@ -129,10 +129,6 @@ websocket.on("connection", socket => {
     console.log(location);
   });
 
-  socket.on("notifName", notifName => {
-    websocket.sockets.emit("notifName", notifName);
-  });
-
   socket.on("photo", photo => {
     clarifai.models.predict(Clarifai.GENERAL_MODEL, { base64: photo }).then(
       response => {
@@ -148,6 +144,7 @@ websocket.on("connection", socket => {
   });
 
   socket.on("notification", notification => {
+    console.log("aksdkjahsd");
     websocket.sockets.emit("notification", notification);
   });
 
