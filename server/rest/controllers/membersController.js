@@ -8,6 +8,7 @@ var createRouter = function(modelName, model, writable, viewMode){
     var theModelName = modelName;
     var view = viewMode;
 
+   
 
     var hashPasswords = function(pass){
         bcrypt.hash(pass, 10, null, function(err, hash, cb) {
