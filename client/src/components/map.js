@@ -49,27 +49,31 @@ export const Map = compose(
   ),
   withScriptjs,
   withGoogleMap
-)(props => (
-  <GoogleMap
-    options={{mapTypeControl: false, streetViewControl: false}}
-    mapTypeId="satellite"
-    defaultZoom={12}
-    defaultCenter={{ lat: 20.3554841, lng: 7.5730188 }}
-  >
-    <div className="noScollbar">
-      {props.isMarkerShown &&
-        props.users.map((marker, key) => (
-          <CustomMarker
-            key={key}
-            latitude={marker.latitude}
-            longitude={marker.longitude}
-            name={marker.name}
-            profession={marker.profession}
-            heartRate={marker.heartRate}
-          />
-        ))}
-    </div>
-  </GoogleMap>
-));
+)(props => {
+  console.log(props);
+  return (
+    <GoogleMap
+      options={{ mapTypeControl: false, streetViewControl: false }}
+      mapTypeId="satellite"
+      defaultZoom={12}
+      defaultCenter={{ lat: 20.3554841, lng: 7.5730188 }}
+    >
+      <div className="noScollbar">
+        {props.isMarkerShown
+          ? props.users.map((marker, key) => (
+              <CustomMarker
+                key={key}
+                latitude={parseInt(marker.location.latitude)}
+                longitude={parseInt(marker.location.longitude)}
+                name={marker.name}
+                profession={marker.profession}
+                heartRate={marker.heartRate}
+              />
+            ))
+          : "kjashdkjasd"}
+      </div>
+    </GoogleMap>
+  );
+});
 
 export default Map;

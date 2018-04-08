@@ -20,11 +20,7 @@ class App extends Component {
   getUsers = async () =>
     await fetch("https://a7c5899f.ngrok.io/member/users")
       .then(x => x.json())
-      .then(y =>
-        this.setState(st => {
-          return { users: y };
-        })
-      );
+      .then(y => this.setState({ users: y }));
 
   componentWillMount = async () => {
     this.getUsers();
