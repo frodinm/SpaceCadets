@@ -59,7 +59,7 @@ export const Map = compose(
       defaultCenter={{ lat: 20.3554841, lng: 7.5730188 }}
     >
       <div className="noScollbar">
-        {props.isMarkerShown
+        {props.isMarkerShown && props.users
           ? props.users.map((marker, key) => (
               <CustomMarker
                 key={key}
