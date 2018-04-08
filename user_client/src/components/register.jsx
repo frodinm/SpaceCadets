@@ -173,7 +173,7 @@ export default class RegisterButton extends React.Component {
         values.profession,
         values.birthday.d,
         values.gender
-      ).then(response => console.log(response));
+      ).then(response => alert(response));
 
       form.resetFields();
       this.setState({ visible: false });
