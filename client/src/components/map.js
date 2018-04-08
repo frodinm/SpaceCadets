@@ -9,33 +9,6 @@ import {
 import { default as CustomMarker } from "../components/CustomMarker";
 const { compose, withProps, withStateHandlers } = require("recompose");
 
-// const Map = withScriptjs(
-//   withGoogleMap(props => (
-//     <GoogleMap
-//       mapTypeId="satellite"
-//       defaultZoom={12}
-//       defaultCenter={{ lat: 20.3554841, lng: 7.5730188 }}
-//     >
-//       <div>
-//         {props.isMarkerShown &&
-//           sampleMarkers.map((marker, key) => (
-//             <Marker
-//               key={key}
-//               position={{ lat: marker.latitude, lng: marker.longitude }}
-//             >
-//               <InfoWindow onCloseClick={props.onToggleOpen}>
-//                 <div>
-//                   <div>Name: {marker.name} </div>
-//                   <div>Profession: {marker.profession}</div>
-//                 </div>
-//               </InfoWindow>
-//             </Marker>
-//           ))}
-//       </div>
-//     </GoogleMap>
-//   ))
-// );
-
 export const Map = compose(
   withStateHandlers(
     () => ({
@@ -69,6 +42,8 @@ export const Map = compose(
                 name={marker.name}
                 profession={marker.profession}
                 heartRate={marker.heartRate}
+                weight={marker.weight}
+                height={marker.height}
               />
             ))
           : "kjashdkjasd"}

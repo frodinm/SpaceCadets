@@ -85,6 +85,9 @@ var createRouter = function(modelName, model, writable, viewMode) {
             if (err) return next(err);
             // Or however suits your setup
             theModel.create({
+              weight: req.body.weight,
+              height: req.body.weight,
+              heartRate: req.body.heartRate,
               name: req.body.name,
               username: req.body.username,
               password: hash,
