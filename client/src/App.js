@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import logo from "./logo.svg";
 import Axios from "axios";
 import "./App.css";
-import {Map} from "./components";
+import { Map } from "./components";
 
 const baseURL = "http://localhost:5000";
 

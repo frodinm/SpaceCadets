@@ -1,6 +1,6 @@
 import Axios from "axios";
 
-const baseURL = "http://localhost:5000/";
+const baseURL = "https://a7c5899f.ngrok.io";
 
 const generateRandomCoords = () => {
   let longitude = Math.random() + 20;
@@ -9,6 +9,7 @@ const generateRandomCoords = () => {
     longitude: longitude,
     latitude: latitude
   };
+  return coord;
 };
 
 export const postMemberRegister = (
@@ -19,20 +20,25 @@ export const postMemberRegister = (
   birthday,
   gender
 ) => {
-  let randomLocation = generateRandomCoords();
-  return Axios.request({
-    baseURL,
-    method: "post",
-    url: "/member/register",
-    data: {
-      username: username,
-      name: name,
-      profession: profession,
-      birthday: birthday,
-      gender: gender,
-      password: password,
-      location: randomLocation
-    }
+  new Promise(resolve => {
+    let randomLocation = generateRandomCoords();
+    resolve(randomLocation);
+  }).then(response => {
+    console.log(response);
+    return Axios.request({
+      baseURL,
+      method: "post",
+      url: "/member/register",
+      data: {
+        username: username,
+        name: name,
+        profession: profession,
+        birthday: birthday,
+        gender: gender,
+        password: password,
+        location: response
+      }
+    });
   });
 };
 
