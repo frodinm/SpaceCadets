@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 
 class MapNav extends Component {
 
-  // TODO: Complete map shift logic (pass in more arguments as required);
   shiftMapView = direction => event => {
     event.preventDefault();
-    console.log(direction);
+    this.props.passMapViewDirection(direction);
   }
 
   render() {
@@ -14,19 +13,19 @@ class MapNav extends Component {
         <div className="row">
           <button 
             className="btn btn-primary mapNavButton"
-            onClick={this.shiftMapView("upperLeft")}
+            onClick={this.shiftMapView("topLeft")}
           >
             <span className="fas fa-chevron-left custom-fa-rotate-45"></span>
           </button>
           <button 
             className="btn btn-primary mapNavButton"
-            onClick={this.shiftMapView("up")}
+            onClick={this.shiftMapView("top")}
           >
             <span className="fas fa-chevron-up"></span>
           </button>
           <button 
             className="btn btn-primary mapNavButton"
-            onClick={this.shiftMapView("upperRight")}
+            onClick={this.shiftMapView("topRight")}
           >
             <span className="fas fa-chevron-up custom-fa-rotate-45"></span>
           </button>
@@ -41,8 +40,8 @@ class MapNav extends Component {
             <span className="fas fa-crosshairs"></span>
           </button>
           <button 
-          className="btn btn-primary mapNavButton"
-          onClick={this.shiftMapView("right")}
+            className="btn btn-primary mapNavButton"
+            onClick={this.shiftMapView("right")}
           >
             <span className="fas fa-chevron-right"></span>
           </button>
@@ -50,19 +49,19 @@ class MapNav extends Component {
         <div className="row">
           <button 
             className="btn btn-primary mapNavButton" 
-            onClick={this.shiftMapView("lowerLeft")}
+            onClick={this.shiftMapView("bottomLeft")}
           >
             <span className="fas fa-chevron-down custom-fa-rotate-45"></span>
           </button>
           <button 
             className="btn btn-primary mapNavButton"
-            onClick={this.shiftMapView("down")}
+            onClick={this.shiftMapView("bottom")}
           >
             <span className="fas fa-chevron-down"></span>
           </button>
           <button 
             className="btn btn-primary mapNavButton"
-            onClick={this.shiftMapView("lowerRight")}
+            onClick={this.shiftMapView("bottomRight")}
           >
             <span className="fas fa-chevron-right custom-fa-rotate-45"></span>
           </button>
