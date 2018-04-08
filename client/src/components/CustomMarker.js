@@ -13,9 +13,7 @@ export default class CustomMarker extends React.Component {
   };
 
   onMarkerClick = () => {
-    this.setState({
-      isOpen: true
-    });
+    this.setState(st => { return { isOpen: !st.isOpen } });
   };
 
   onCloseInfoBox = () => {
@@ -25,6 +23,7 @@ export default class CustomMarker extends React.Component {
   };
 
   render() {
+
     const { latitude, longitude, name, profession, heartRate } = this.props;
 
     const google = window.google;
