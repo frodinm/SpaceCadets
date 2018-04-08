@@ -1,6 +1,6 @@
 import Axios from "axios";
 
-const baseURL = "https://e2c18673.ngrok.io";
+const baseURL = "https://1119190e.ngrok.io";
 
 const generateData = () => {
   let latitude = Math.random() / 5 + 20.3554841;
@@ -18,6 +18,8 @@ const generateData = () => {
   };
   return data;
 };
+
+const baseChatURL = "https://api.dialogflow.com/v1/";
 
 export const postMemberRegister = (
   username,
@@ -73,5 +75,21 @@ export const postMemberLogout = () => {
     baseURL,
     method: "post",
     url: "/member/logout"
+  });
+};
+
+export const getDialogFlow = query => {
+  return Axios.request({
+    baseURL: baseChatURL,
+    method: "post",
+    headers: {
+      Authorization: `Bearer 4293dda73a4a4d4a94111bd65b37b441`
+    },
+    url: "/query?v=20150910",
+    data: {
+      lang: "en",
+      sessionId: "12345",
+      query
+    }
   });
 };

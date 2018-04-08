@@ -3,15 +3,22 @@ import Camera from "react-camera";
 import io from "socket.io-client";
 import { default as RegisterButton } from "./components/register";
 import { default as SignInButton } from "./components/SignIn";
+import {
+  Widget,
+  addResponseMessage,
+  addLinkSnippet,
+  addUserMessage
+} from "react-chat-widget";
 import "antd/dist/antd.css";
 import {
   postMemberRegister,
   postMemberLogin,
-  postMemberLogout
+  postMemberLogout,
+  getDialogFlow
 } from "./utils/api";
 import { Icon, Button } from "antd";
 
-const socket = io("https://e2c18673.ngrok.io");
+const socket = io("https://1119190e.ngrok.io");
 
 export default class App extends Component {
   constructor(props) {
@@ -21,6 +28,21 @@ export default class App extends Component {
       isLoggedIn: false,
       user: {}
     };
+
+    // socket.on("photo", photo => {
+    //   console.log(photo);
+    //   this.setState({
+    //     photo: photo
+    //   });
+    // });
+
+    // socket.on("photo_response", response => {
+    //   console.log(response);
+    // });
+
+    // socket.on("photo_error", err => {
+    //   console.log(err);
+    // });
   }
 
   login = (username, password) => {
@@ -97,6 +119,17 @@ export default class App extends Component {
     });
   };
 
+  handleNewUserMessage = newMessage => {
+    console.log(`New message incomig! ${newMessage}`);
+    getDialogFlow(newMessage)
+      .then(e => {
+        addResponseMessage(e.data.result.fulfillment.speech);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
   render() {
     console.log("user", this.state.user);
     return (
@@ -130,7 +163,7 @@ export default class App extends Component {
                 this.camera = cam;
               }}
             />
-            <div style={style.captureContainer} onClick={this.takePicture}>
+            <div style={style.captureContainer}>
               <div style={style.captureButton}>
                 <Icon
                   style={{
@@ -139,10 +172,17 @@ export default class App extends Component {
                     justifyContent: "center",
                     alignItems: "center",
                     display: "flex",
-                    height: "100%"
+                    height: "100%",
+                    cursor: "pointer"
                   }}
                   type="camera-o"
+                  onClick={this.takePicture}
                 />
+                {/* <Widget
+                  title="First Aid Cadet"
+                  subtitle="Save a life today"
+                  handleNewUserMessage={this.handleNewUserMessage}
+                /> */}
               </div>
             </div>
             <img style={style.captureImage} src={this.state.photo} />
